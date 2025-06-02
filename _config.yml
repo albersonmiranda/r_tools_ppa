@@ -1,0 +1,4 @@
+theme: jekyll-theme-minimal
+title: R Tools PPA
+description: Unofficial package repository for RStudio, Quarto, and Positron for Linux
+show_downloads: false
