@@ -96,4 +96,25 @@ Components: main
 Description: RStudio, Quarto, and Positron Linux packages
 EOF
 
+# --- Generate checksums for Release file ---
+echo "Generating checksums..."
+
+# Function to generate checksums
+generate_checksums() {
+    local hash_cmd=$1
+    local hash_name=$2
+    
+    echo "${hash_name}:" >> deb/dists/stable/Release
+    find deb/dists/stable -name "Packages.gz" -type f | while read file; do
+        local rel_path=${file#deb/dists/stable/}
+        local hash=$(${hash_cmd} "$file" | cut -d' ' -f1)
+        local size=$(stat -c%s "$file")
+        printf " %s %8d %s\n" "$hash" "$size" "$rel_path" >> deb/dists/stable/Release
+    done
+}
+
+# Generate MD5Sum and SHA256 checksums
+generate_checksums "md5sum" "MD5Sum"
+generate_checksums "sha256sum" "SHA256"
+
 echo "✅ All packages downloaded and metadata generated successfully."
