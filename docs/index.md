@@ -7,8 +7,7 @@ date: 2025-06-03
 
 # R Tools PPA
 
-Welcome to the R Tools Personal Package Archive (PPA)!  
-This PPA provides up-to-date R tools and utilities for Linux users.
+This is a Personal Package Archive (PPA) for distributing latest versions of Rstudio, Quarto and Positron for Linux users.
 
 - .deb packages for Ubuntu and Debian-based distributions.
   - Rstudio
