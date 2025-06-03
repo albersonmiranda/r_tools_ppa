@@ -1,5 +1,8 @@
 ---
 title: R Tools PPA
+description: A Personal Package Archive (PPA) for R tools and utilities, providing .deb and .rpm packages for various distributions.
+author: Alberson Miranda
+date: 2025-06-03
 ---
 
 # R Tools PPA
