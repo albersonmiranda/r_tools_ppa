@@ -1,0 +1,35 @@
+name: Update Fedora x86_64 RPMs and Upload to SourceForge
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 3 * * *'  # Runs daily at 03:00 UTC
+
+jobs:
+  update-and-upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y createrepo-c jq curl rpm
+
+      - name: Run update_packages.sh
+        run: |
+          bash scripts/update_packages.sh
+
+      - name: Upload RPMs and repodata to SourceForge via SFTP
+        env:
+          SF_SFTP_USER: ${{ secrets.SF_SFTP_USER }}
+          SF_SFTP_PASS: ${{ secrets.SF_SFTP_PASS }}
+        run: |
+          sudo apt-get install -y lftp
+          lftp -u "$SF_SFTP_USER","$SF_SFTP_PASS" sftp://frs.sourceforge.net <<EOF
+          set sftp:auto-confirm yes
+          mirror -R --parallel=2 rpm/x86_64 /home/frs/project/r-tools-ppa/rpm_x86_64
+          bye
+          EOF
