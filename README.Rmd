@@ -1,15 +1,23 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 
 # R Tools Linux Repository
 
 <!-- badges: start -->
-
 [![R-CMD-check](https://github.com/albersonmiranda/linux_projects/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/albersonmiranda/linux_projects/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-This is a Personal Package Archive (PPA) for distributing latest
-versions of Rstudio, Quarto and Positron for Linux users.
+This is a Personal Package Archive (PPA) for distributing latest versions of Rstudio, Quarto and Positron for Linux users.
 
 ## Support
 
@@ -18,26 +26,22 @@ versions of Rstudio, Quarto and Positron for Linux users.
 
 ## Fedora/Red Hat Installation
 
-To enable this repository and install the latest RStudio, Quarto, or
-Positron:
+To enable this repository and install the latest RStudio, Quarto, or Positron:
 
-1.  Download the repository file:
-
-    ``` bash
+1. Download the repository file:
+    ```{bash, eval = FALSE}
     sudo curl -o /etc/yum.repos.d/r_tools_ppa.repo \
       https://albersonmiranda.github.io/r_tools_ppa/rpm/x86_64/.repo
     ```
 
     Or for aarch64 architecture:
-
-    ``` bash
+    ```{bash, eval = FALSE}
     sudo curl -o /etc/yum.repos.d/r_tools_ppa.repo \
       https://albersonmiranda.github.io/r_tools_ppa/rpm/aarch64/.repo
     ```
 
-2.  Update & install (e.g., RStudio):
-
-    ``` bash
+2. Update & install (e.g., RStudio):
+    ```{bash, eval = FALSE}
     sudo dnf update
     sudo dnf install rstudio
     ```
