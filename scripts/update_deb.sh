@@ -90,6 +90,7 @@ Origin: r_tools_ppa
 Label: r_tools_ppa
 Suite: stable
 Codename: stable
+Date: $(date -R)
 Architectures: amd64 arm64
 Components: main
 Description: RStudio, Quarto, and Positron Linux packages

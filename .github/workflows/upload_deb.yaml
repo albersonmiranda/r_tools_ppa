@@ -27,23 +27,41 @@ jobs:
           SF_SFTP_USER: ${{ secrets.SF_SFTP_USER }}
           SF_SFTP_PASS: ${{ secrets.SF_SFTP_PASS }}
         run: |
+          # Create temporary directory for amd64 packages only
+          mkdir -p temp_amd64/deb/pool/main
+          
+          # Copy only amd64 packages (*-x64.deb, *-amd64.deb, but exclude *-arm64.deb)
+          find deb/pool/main -name "*.deb" \( -name "*-x64.deb" -o -name "*-amd64.deb" \) -exec cp {} temp_amd64/deb/pool/main/ \;
+          
           lftp -u "$SF_SFTP_USER","$SF_SFTP_PASS" sftp://frs.sourceforge.net <<EOF
           set sftp:auto-confirm yes
-          mirror -R --parallel=2 deb/pool/main /home/frs/project/r-tools-ppa/deb_amd64
+          mirror -R --parallel=2 temp_amd64/deb/pool/main /home/frs/project/r-tools-ppa/deb_amd64/deb/pool/main
           mirror -R --parallel=2 deb/dists/stable/main/binary-amd64 /home/frs/project/r-tools-ppa/deb_amd64/dists/stable/main/binary-amd64
           mirror -R --parallel=2 deb/dists/stable /home/frs/project/r-tools-ppa/deb_amd64/dists/stable
           bye
           EOF
+          
+          # Clean up temporary directory
+          rm -rf temp_amd64
 
       - name: Upload DEBs arm64 and metadata to SourceForge via SFTP
         env:
           SF_SFTP_USER: ${{ secrets.SF_SFTP_USER }}
           SF_SFTP_PASS: ${{ secrets.SF_SFTP_PASS }}
         run: |
+          # Create temporary directory for arm64 packages only
+          mkdir -p temp_arm64/deb/pool/main
+          
+          # Copy only arm64 packages (*-arm64.deb)
+          find deb/pool/main -name "*-arm64.deb" -exec cp {} temp_arm64/deb/pool/main/ \;
+          
           lftp -u "$SF_SFTP_USER","$SF_SFTP_PASS" sftp://frs.sourceforge.net <<EOF
           set sftp:auto-confirm yes
-          mirror -R --parallel=2 deb/pool/main /home/frs/project/r-tools-ppa/deb_arm64
+          mirror -R --parallel=2 temp_arm64/deb/pool/main /home/frs/project/r-tools-ppa/deb_arm64/deb/pool/main
           mirror -R --parallel=2 deb/dists/stable/main/binary-arm64 /home/frs/project/r-tools-ppa/deb_arm64/dists/stable/main/binary-arm64
           mirror -R --parallel=2 deb/dists/stable /home/frs/project/r-tools-ppa/deb_arm64/dists/stable
           bye
           EOF
+          
+          # Clean up temporary directory
+          rm -rf temp_arm64
