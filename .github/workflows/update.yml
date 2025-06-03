@@ -1,0 +1,33 @@
+name: Update Packages Repo
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *' # runs daily at midnight UTC
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq dpkg-dev createrepo-c curl gzip
+
+      - name: Run update_packages.sh
+        run: |
+          bash scripts/update_packages.sh
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add deb rpm
+          git commit -m "Update packages and metadata" || echo "No changes to commit"
+          git push
