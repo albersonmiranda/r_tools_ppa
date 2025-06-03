@@ -75,7 +75,6 @@ for TYPE in rpm; do
       exit 1
     fi
     mv "$TMP_FILE" "$DEST"
-  done
 done
 
 # --- Generate RPM Metadata ---
