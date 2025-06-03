@@ -1,7 +1,5 @@
 ---
-layout: default
 title: R Tools PPA
-theme: cayman
 ---
 
 # R Tools PPA

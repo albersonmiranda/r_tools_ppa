@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 # R Tools Linux Repository
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/albersonmiranda/linux_projects/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/albersonmiranda/linux_projects/actions/workflows/R-CMD-check.yaml)
+[![upload-rpm](https://github.com/albersonmiranda/r_tools_ppa/actions/workflows/upload_rpm.yaml/badge.svg)](https://github.com/albersonmiranda/r_tools_ppa/actions/workflows/upload_rpm.yaml)
 <!-- badges: end -->
 
 This is a Personal Package Archive (PPA) for distributing latest versions of Rstudio, Quarto and Positron for Linux users.
