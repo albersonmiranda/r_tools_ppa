@@ -20,19 +20,19 @@ This PPA provides up-to-date R tools and utilities for Linux users.
 To enable this repository and install the latest RStudio, Quarto, or Positron:
 
 1. Download the repository file:
-    ```{bash, eval = FALSE}
+    ```sh
     sudo curl -L -o /etc/yum.repos.d/r_tools_ppa.repo \
       https://sourceforge.net/projects/r-tools-ppa/files/rpm_x86_64/repo.txt/download
     ```
 
     Or for aarch64 architecture:
-    ```{bash, eval = FALSE}
+    ```sh
     sudo curl -o /etc/yum.repos.d/r_tools_ppa.repo \
       https://sourceforge.net/projects/r-tools-ppa/files/rpm_aarch64/repo.txt/download
     ```
 
 2. Update & install (e.g., RStudio):
-    ```{bash, eval = FALSE}
+    ```sh
     sudo dnf update
     sudo dnf install rstudio
     ```
