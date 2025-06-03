@@ -64,6 +64,9 @@ for ARCH in "x86_64" "aarch64"; do
     
     # Create RPM spec file
     cat > ~/rpmbuild/SPECS/quarto-${ARCH}.spec <<EOF
+%global debug_package %{nil}
+%global _build_id_links none
+
 Name:           quarto
 Version:        ${QUARTO_VERSION_NO_V}
 Release:        1%{?dist}
