@@ -23,7 +23,12 @@ This is a Personal Package Archive (PPA) for distributing latest versions of Rst
 ## Support
 
 - .deb packages for Ubuntu and Debian-based distributions.
+  - Rstudio
+  - Quarto
+  - Positron
 - .rpm packages for Fedora and Red Hat-based distributions.
+  - Rstudio
+  - Positron
 
 ## Debian/Ubuntu Installation
 

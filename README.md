@@ -15,7 +15,12 @@ versions of Rstudio, Quarto and Positron for Linux users.
 ## Support
 
 - .deb packages for Ubuntu and Debian-based distributions.
+  - Rstudio
+  - Quarto
+  - Positron
 - .rpm packages for Fedora and Red Hat-based distributions.
+  - Rstudio
+  - Positron
 
 ## Debian/Ubuntu Installation
 

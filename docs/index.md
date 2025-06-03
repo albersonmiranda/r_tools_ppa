@@ -7,6 +7,14 @@ title: R Tools PPA
 Welcome to the R Tools Personal Package Archive (PPA)!  
 This PPA provides up-to-date R tools and utilities for Linux users.
 
+- .deb packages for Ubuntu and Debian-based distributions.
+  - Rstudio
+  - Quarto
+  - Positron
+- .rpm packages for Fedora and Red Hat-based distributions.
+  - Rstudio
+  - Positron
+
 ## Fedora/Red Hat Installation
 
 To enable this repository and install the latest RStudio, Quarto, or Positron:
