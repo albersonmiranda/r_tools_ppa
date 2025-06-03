@@ -117,7 +117,6 @@ EOF
     rm -f "$TMP_FILE"
 done
 
-# Cleanup RPM build directory
 rm -rf ~/rpmbuild
 
 # --- Positron ---
@@ -125,7 +124,7 @@ echo "Fetching Positron download URLs..."
 
 POSITRON_PAGE=$(curl -s "https://positron.posit.co/download.html")
 
-for ARCH in "x86_64" "aarch64"; do
+for ARCH in "x86_64"; do
     PATTERN="https://cdn.posit.co/positron/prereleases/rpm/${ARCH}/Positron-[^\" ]+\.rpm"
     if [ "$ARCH" = "x86_64" ]; then
       DEST_DIR="$RPM_X86_DIR"
