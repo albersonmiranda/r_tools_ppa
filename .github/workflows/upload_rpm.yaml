@@ -1,4 +1,4 @@
-name: Update Fedora x86_64 RPMs and Upload to SourceForge
+name: Update RPMs and Upload to SourceForge
 
 on:
   workflow_dispatch:
@@ -18,11 +18,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y createrepo-c jq curl rpm
 
-      - name: Run update_packages.sh
+      - name: Run update script
         run: |
-          bash scripts/update_packages.sh
+          bash scripts/update_rpm.sh
 
-      - name: Upload RPMs and repodata to SourceForge via SFTP
+      - name: Upload RPMs x86_64 and repodata to SourceForge via SFTP
         env:
           SF_SFTP_USER: ${{ secrets.SF_SFTP_USER }}
           SF_SFTP_PASS: ${{ secrets.SF_SFTP_PASS }}
@@ -31,5 +31,16 @@ jobs:
           lftp -u "$SF_SFTP_USER","$SF_SFTP_PASS" sftp://frs.sourceforge.net <<EOF
           set sftp:auto-confirm yes
           mirror -R --parallel=2 rpm/x86_64 /home/frs/project/r-tools-ppa/rpm_x86_64
+          bye
+          EOF
+
+      - name: Upload RPMs aarch64 and repodata to SourceForge via SFTP
+        env:
+          SF_SFTP_USER: ${{ secrets.SF_SFTP_USER }}
+          SF_SFTP_PASS: ${{ secrets.SF_SFTP_PASS }}
+        run: |
+          lftp -u "$SF_SFTP_USER","$SF_SFTP_PASS" sftp://frs.sourceforge.net <<EOF
+          set sftp:auto-confirm yes
+          mirror -R --parallel=2 rpm/aarch64 /home/frs/project/r-tools-ppa/rpm_aarch64
           bye
           EOF

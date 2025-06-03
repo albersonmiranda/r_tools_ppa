@@ -20,11 +20,7 @@ echo "Fetching RStudio download URLs..."
 
 RSTUDIO_PAGE=$(curl -s "https://posit.co/download/rstudio-desktop/")
 
-RSTUDIO_DEB_URL=$(echo "$RSTUDIO_PAGE" | grep -oE 'https://.*rstudio-.*-amd64.deb' | head -n1)
 RSTUDIO_RPM_URL=$(echo "$RSTUDIO_PAGE" | grep -oE 'https://.*rstudio-.*-x86_64.rpm' | head -n1)
-
-echo "Downloading RStudio .deb amd64..."
-curl -L -o "$DEB_DIR/$(basename $RSTUDIO_DEB_URL)" "$RSTUDIO_DEB_URL"
 
 echo "Downloading RStudio .rpm x86_64..."
 curl -L -o "$RPM_X86_DIR/$(basename $RSTUDIO_RPM_URL)" "$RSTUDIO_RPM_URL"
@@ -59,18 +55,12 @@ echo "Fetching Positron download URLs..."
 
 POSITRON_PAGE=$(curl -s "https://positron.posit.co/download.html")
 
-for TYPE in deb rpm; do
-  for ARCH in x86_64 arm64; do
-    if [ "$TYPE" = "deb" ]; then
-      PATTERN="https://cdn.posit.co/positron/prereleases/deb/${ARCH}/Positron-[^\" ]+\.deb"
-      DEST_DIR="$DEB_DIR"
+for TYPE in rpm; do
+    PATTERN="https://cdn.posit.co/positron/prereleases/rpm/${ARCH}/Positron-[^\" ]+\.rpm"
+    if [ "$ARCH" = "x86_64" ]; then
+      DEST_DIR="$RPM_X86_DIR"
     else
-      PATTERN="https://cdn.posit.co/positron/prereleases/rpm/${ARCH}/Positron-[^\" ]+\.rpm"
-      if [ "$ARCH" = "x86_64" ]; then
-        DEST_DIR="$RPM_X86_DIR"
-      else
-        DEST_DIR="$RPM_ARM_DIR"
-      fi
+      DEST_DIR="$RPM_ARM_DIR"
     fi
 
     URL=$(echo "$POSITRON_PAGE" | grep -oE "$PATTERN" | head -n1)
@@ -87,25 +77,6 @@ for TYPE in deb rpm; do
     mv "$TMP_FILE" "$DEST"
   done
 done
-
-# --- Generate Debian Metadata ---
-echo "Generating APT metadata..."
-
-for ARCH in "binary-amd64" "binary-arm64"; do
-    mkdir -p "deb/dists/stable/main/${ARCH}"
-    dpkg-scanpackages --multiversion "$DEB_DIR" /dev/null | gzip -9c > "deb/dists/stable/main/${ARCH}/Packages.gz"
-done
-
-# --- Create Release file ---
-cat <<EOF > deb/dists/stable/Release
-Origin: r_tools_ppa
-Label: r_tools_ppa
-Suite: stable
-Codename: stable
-Architectures: amd64 arm64
-Components: main
-Description: RStudio, Quarto, and Positron Linux packages
-EOF
 
 # --- Generate RPM Metadata ---
 echo "Generating RPM metadata..."

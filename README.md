@@ -24,15 +24,15 @@ Positron:
 1.  Download the repository file:
 
     ``` bash
-    sudo curl -o /etc/yum.repos.d/r_tools_ppa.repo \
-      https://albersonmiranda.github.io/r_tools_ppa/rpm/x86_64/.repo
+    sudo curl -L -o /etc/yum.repos.d/r_tools_ppa.repo \
+      https://sourceforge.net/projects/r-tools-ppa/files/rpm_x86_64/repo.txt/download
     ```
 
     Or for aarch64 architecture:
 
     ``` bash
     sudo curl -o /etc/yum.repos.d/r_tools_ppa.repo \
-      https://albersonmiranda.github.io/r_tools_ppa/rpm/aarch64/.repo
+      https://sourceforge.net/projects/r-tools-ppa/files/rpm_aarch64/repo.txt/download
     ```
 
 2.  Update & install (e.g., RStudio):
