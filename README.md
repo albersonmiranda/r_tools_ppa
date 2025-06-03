@@ -1,33 +1,25 @@
-# R Tools PPA
+# R Tools Linux Repository
 
-This is a Personal Package Archive (PPA) for distributing R tools and utilities for Linux users.
+This is a Personal Package Archive (PPA) for distributing latest versions of Rstudio, Quarto and Positron for Linux users.
 
-## Features
+## Support
 
-- Latest R tools and utilities
-- Easy installation via APT
+- .deb packages for Ubuntu and Debian-based distributions.
+- .rpm packages for Fedora and Red Hat-based distributions.
 
-## Installation
+## Fedora/Red Hat Installation
 
-1. Add the PPA to your system:
-   ```sh
-   sudo add-apt-repository ppa:yourusername/r-tools
-   sudo apt update
-   ```
+To enable this repository and install the latest RStudio, Quarto, or Positron:
 
-2. Install desired packages:
-   ```sh
-   sudo apt install <package-name>
-   ```
+1. Download the repository file:
+    ```bash
+    sudo curl -o /etc/yum.repos.d/r_tools_ppa.repo \
+      https://albersonmiranda.github.io/r_tools_ppa/rpm/x86_64/.repo
+    ```
 
-## Homepage
-
-See the [homepage](index.html) for more details.
-
-## Contributing
-
-Pull requests are welcome! Please open an issue first to discuss changes.
-
-## License
-
-[MIT](LICENSE)
+2. Update & install (e.g., RStudio):
+    ```bash
+    sudo dnf update
+    sudo dnf install rstudio
+    ```
+---
