@@ -37,7 +37,8 @@ echo "Quarto latest version: $QUARTO_VERSION"
 # Create RPM build environment
 rpmdev-setuptree
 
-for ARCH in "x86_64" "aarch64"; do
+# I removed aarch64 support because I could not build it successfully
+for ARCH in "x86_64"; do
     # Map architecture names for Quarto download
     if [ "$ARCH" = "x86_64" ]; then
         QUARTO_ARCH="amd64"
