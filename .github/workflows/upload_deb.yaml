@@ -1,0 +1,49 @@
+name: Update DEBs and Upload to SourceForge
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 4 * * *'  # Runs daily at 04:00 UTC
+
+jobs:
+  update-and-upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq dpkg-dev curl gzip lftp
+
+      - name: Run update script
+        run: |
+          bash scripts/update_deb.sh
+
+      - name: Upload DEBs amd64 and metadata to SourceForge via SFTP
+        env:
+          SF_SFTP_USER: ${{ secrets.SF_SFTP_USER }}
+          SF_SFTP_PASS: ${{ secrets.SF_SFTP_PASS }}
+        run: |
+          lftp -u "$SF_SFTP_USER","$SF_SFTP_PASS" sftp://frs.sourceforge.net <<EOF
+          set sftp:auto-confirm yes
+          mirror -R --parallel=2 deb/pool/main /home/frs/project/r-tools-ppa/deb_amd64
+          mirror -R --parallel=2 deb/dists/stable/main/binary-amd64 /home/frs/project/r-tools-ppa/deb_amd64/dists/stable/main/binary-amd64
+          mirror -R --parallel=2 deb/dists/stable /home/frs/project/r-tools-ppa/deb_amd64/dists/stable
+          bye
+          EOF
+
+      - name: Upload DEBs arm64 and metadata to SourceForge via SFTP
+        env:
+          SF_SFTP_USER: ${{ secrets.SF_SFTP_USER }}
+          SF_SFTP_PASS: ${{ secrets.SF_SFTP_PASS }}
+        run: |
+          lftp -u "$SF_SFTP_USER","$SF_SFTP_PASS" sftp://frs.sourceforge.net <<EOF
+          set sftp:auto-confirm yes
+          mirror -R --parallel=2 deb/pool/main /home/frs/project/r-tools-ppa/deb_arm64
+          mirror -R --parallel=2 deb/dists/stable/main/binary-arm64 /home/frs/project/r-tools-ppa/deb_arm64/dists/stable/main/binary-arm64
+          mirror -R --parallel=2 deb/dists/stable /home/frs/project/r-tools-ppa/deb_arm64/dists/stable
+          bye
+          EOF

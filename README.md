@@ -6,6 +6,7 @@
 <!-- badges: start -->
 
 [![upload-rpm](https://github.com/albersonmiranda/r_tools_ppa/actions/workflows/upload_rpm.yaml/badge.svg)](https://github.com/albersonmiranda/r_tools_ppa/actions/workflows/upload_rpm.yaml)
+[![upload-deb](https://github.com/albersonmiranda/r_tools_ppa/actions/workflows/upload_deb.yaml/badge.svg)](https://github.com/albersonmiranda/r_tools_ppa/actions/workflows/upload_deb.yaml)
 <!-- badges: end -->
 
 This is a Personal Package Archive (PPA) for distributing latest
@@ -15,6 +16,31 @@ versions of Rstudio, Quarto and Positron for Linux users.
 
 - .deb packages for Ubuntu and Debian-based distributions.
 - .rpm packages for Fedora and Red Hat-based distributions.
+
+## Debian/Ubuntu Installation
+
+To enable this repository and install the latest RStudio, Quarto, or
+Positron:
+
+1.  Add the repository (amd64):
+
+    ``` bash
+    echo "deb [trusted=yes] https://downloads.sourceforge.net/project/r-tools-ppa/deb_amd64 stable main" | sudo tee /etc/apt/sources.list.d/r_tools_ppa.list
+    sudo apt update
+    ```
+
+    Or for arm64:
+
+    ``` bash
+    echo "deb [trusted=yes] https://downloads.sourceforge.net/project/r-tools-ppa/deb_arm64 stable main" | sudo tee /etc/apt/sources.list.d/r_tools_ppa.list
+    sudo apt update
+    ```
+
+2.  Install a package (e.g., RStudio):
+
+    ``` bash
+    sudo apt install rstudio
+    ```
 
 ## Fedora/Red Hat Installation
 
