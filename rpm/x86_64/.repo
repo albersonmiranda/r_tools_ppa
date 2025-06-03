@@ -1,5 +1,0 @@
-[rtools]
-name=R Tools PPA
-baseurl=https://albersonmiranda.github.io/r_tools_ppa/rpm/x86_64/
-enabled=1
-gpgcheck=0
