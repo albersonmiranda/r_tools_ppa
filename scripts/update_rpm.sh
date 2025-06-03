@@ -4,7 +4,7 @@ set -e
 set -o pipefail
 
 # --- Dependency checks ---
-for cmd in jq createrepo_c curl grep sort head gzip rpmbuild; do
+for cmd in jq createrepo_c curl grep sort head gzip rpmbuild rpmdev-setuptree; do
     command -v $cmd >/dev/null 2>&1 || { echo >&2 "$cmd is required but not installed. Aborting."; exit 1; }
 done
 
@@ -34,17 +34,8 @@ QUARTO_VERSION_NO_V=${QUARTO_VERSION#v}
 
 echo "Quarto latest version: $QUARTO_VERSION"
 
-# --- Quarto ---
-echo "Fetching Quarto release info..."
-
-QUARTO_API="https://api.github.com/repos/quarto-dev/quarto-cli/releases/latest"
-QUARTO_VERSION=$(curl -s "$QUARTO_API" | jq -r '.tag_name')
-QUARTO_VERSION_NO_V=${QUARTO_VERSION#v}
-
-echo "Quarto latest version: $QUARTO_VERSION"
-
 # Create RPM build environment
-mkdir -p ~/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
+rpmdev-setuptree
 
 for ARCH in "x86_64" "aarch64"; do
     # Map architecture names for Quarto download
