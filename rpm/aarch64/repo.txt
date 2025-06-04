@@ -1,0 +1,5 @@
+[r_tools_ppa]
+name=R Tools PPA
+baseurl=https://downloads.sourceforge.net/project/r-tools-ppa/rpm_aarch64/
+enabled=1
+gpgcheck=0
