@@ -28,11 +28,11 @@ jobs:
           SF_SFTP_USER: ${{ secrets.SF_SFTP_USER }}
           SF_SFTP_PASS: ${{ secrets.SF_SFTP_PASS }}
         run: |
-          sshpass -p "$SF_SFTP_PASS" scp -r rpm/x86_64/ albersonmiranda@frs.sourceforge.net:/home/frs/project/r-tools-ppa/rpm_x86_64
+          sshpass -p "$SF_SFTP_PASS" scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r rpm/x86_64/ albersonmiranda@frs.sourceforge.net:/home/frs/project/r-tools-ppa/rpm_x86_64
 
       - name: Upload RPMs aarch64 and repodata to SourceForge via SFTP
         env:
           SF_SFTP_USER: ${{ secrets.SF_SFTP_USER }}
           SF_SFTP_PASS: ${{ secrets.SF_SFTP_PASS }}
         run: |
-          sshpass -p "$SF_SFTP_PASS" scp -r rpm/aarch64/ albersonmiranda@frs.sourceforge.net:/home/frs/project/r-tools-ppa/rpm_aarch64
+          sshpass -p "$SF_SFTP_PASS" scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r rpm/aarch64/ albersonmiranda@frs.sourceforge.net:/home/frs/project/r-tools-ppa/rpm_aarch64
