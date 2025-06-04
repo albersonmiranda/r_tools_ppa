@@ -10,11 +10,11 @@ date: 2025-06-03
 This is a Personal Package Archive (PPA) for distributing latest versions of Rstudio, Quarto and Positron for Linux users.
 
 - .deb packages for Ubuntu and Debian-based distributions.
-  - Rstudio (amd64 and arm64)
+  - Rstudio (amd64)
   - Quarto (amd64 and arm64)
   - Positron (amd64 and arm64)
 - .rpm packages for Fedora and Red Hat-based distributions.
-  - Rstudio (x86_64 and aarch64)
+  - Rstudio (x86_64)
   - Positron (x86_64 and aarch64)
   - Quarto (x86_64)
 

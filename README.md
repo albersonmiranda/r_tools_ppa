@@ -15,11 +15,11 @@ versions of Rstudio, Quarto and Positron for Linux users.
 ## Support
 
 - .deb packages for Ubuntu and Debian-based distributions.
-  - Rstudio (amd64 and arm64)
+  - Rstudio (amd64)
   - Quarto (amd64 and arm64)
   - Positron (amd64 and arm64)
 - .rpm packages for Fedora and Red Hat-based distributions.
-  - Rstudio (x86_64 and aarch64)
+  - Rstudio (x86_64)
   - Positron (x86_64 and aarch64)
   - Quarto (x86_64)
 
