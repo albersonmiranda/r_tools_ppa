@@ -17,7 +17,7 @@ jobs:
       - name: Install dependencies
         run: |
           dnf update -y
-          dnf install -y createrepo_c jq curl rpm-build rpmdevtools lftp tar gzip sshpass
+          dnf install -y createrepo_c jq curl rpm-build rpmdevtools lftp tar gzip sshpass openssh-clients
 
       - name: Run update script
         run: |
