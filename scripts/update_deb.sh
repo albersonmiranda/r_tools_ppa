@@ -58,7 +58,7 @@ POSITRON_PAGE=$(curl -s "https://positron.posit.co/download.html")
 
 for TYPE in deb; do
   for ARCH in x86_64 arm64; do
-    PATTERN="https://cdn.posit.co/positron/prereleases/deb/${ARCH}/Positron-[^\" ]+\.deb"
+    PATTERN="https://cdn.posit.co/positron/releases/deb/${ARCH}/Positron-[^\" ]+\.deb"
     DEST_DIR="$DEB_DIR"
 
     URL=$(echo "$POSITRON_PAGE" | grep -oE "$PATTERN" | head -n1)
