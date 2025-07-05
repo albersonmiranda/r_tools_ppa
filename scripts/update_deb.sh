@@ -79,18 +79,38 @@ done
 # --- Generate Debian Metadata ---
 echo "Generating APT metadata..."
 
+# Create separate packages for each architecture
 for ARCH in "amd64" "arm64"; do
-    mkdir -p "deb_${ARCH}/dists/stable/main/binary-${ARCH}"
-    dpkg-scanpackages --multiversion "$DEB_DIR" /dev/null | gzip -9c > "deb_${ARCH}/dists/stable/main/binary-${ARCH}/Packages.gz"
+    mkdir -p "deb/dists/stable/main/binary-${ARCH}"
+    
+    # Create temporary directory for architecture-specific packages
+    TEMP_DIR=$(mktemp -d)
+    
+    if [ "$ARCH" = "amd64" ]; then
+        # For amd64, include both amd64 and x64 packages
+        find "$DEB_DIR" -name "*.deb" \( -name "*-amd64.deb" -o -name "*-x64.deb" \) -exec cp {} "$TEMP_DIR/" \;
+    else
+        # For arm64, include only arm64 packages
+        find "$DEB_DIR" -name "*-arm64.deb" -exec cp {} "$TEMP_DIR/" \;
+    fi
+    
+    # Generate Packages.gz for this architecture
+    dpkg-scanpackages --multiversion "$TEMP_DIR" /dev/null | \
+    sed "s|Filename: ${TEMP_DIR}/|Filename: pool/main/|g" | \
+    gzip -9c > "deb/dists/stable/main/binary-${ARCH}/Packages.gz"
+    
+    # Clean up temporary directory
+    rm -rf "$TEMP_DIR"
+done
 
-# --- Create Release file ---
-cat <<EOF > deb_${ARCH}/dists/stable/Release
+# --- Create single Release file ---
+cat <<EOF > deb/dists/stable/Release
 Origin: r_tools_ppa
 Label: r_tools_ppa
 Suite: stable
 Codename: stable
 Date: $(date -R)
-Architectures: ${ARCH}
+Architectures: amd64 arm64
 Components: main
 Description: RStudio, Quarto, and Positron Linux packages
 EOF
@@ -103,19 +123,17 @@ generate_checksums() {
     local hash_cmd=$1
     local hash_name=$2
     
-    echo "${hash_name}:" >> deb_${ARCH}/dists/stable/Release
-    find deb_${ARCH}/dists/stable -name "Packages.gz" -type f | while read file; do
-        local rel_path=${file#deb_${ARCH}/dists/stable/}
+    echo "${hash_name}:" >> deb/dists/stable/Release
+    find deb/dists/stable -name "Packages.gz" -type f | while read file; do
+        local rel_path=${file#deb/dists/stable/}
         local hash=$(${hash_cmd} "$file" | cut -d' ' -f1)
         local size=$(stat -c%s "$file")
-        printf " %s %8d %s\n" "$hash" "$size" "$rel_path" >> deb_${ARCH}/dists/stable/Release
+        printf " %s %8d %s\n" "$hash" "$size" "$rel_path" >> deb/dists/stable/Release
     done
 }
 
 # Generate MD5Sum and SHA256 checksums
 generate_checksums "md5sum" "MD5Sum"
 generate_checksums "sha256sum" "SHA256"
-
-done
 
 echo "✅ All packages downloaded and metadata generated successfully."

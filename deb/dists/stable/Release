@@ -2,6 +2,13 @@ Origin: r_tools_ppa
 Label: r_tools_ppa
 Suite: stable
 Codename: stable
+Date: Sat, 05 Jul 2025 15:18:10 -0300
 Architectures: amd64 arm64
 Components: main
 Description: RStudio, Quarto, and Positron Linux packages
+MD5Sum:
+ 413a45070acb854933d79b3caf933540     1442 main/binary-amd64/Packages.gz
+ b1a588b8de0300a2c00667d2e1571c78     1062 main/binary-arm64/Packages.gz
+SHA256:
+ 22f093f44f276484425c3c2adb5c2431d0d760ae33821acd303cb3f8ee4f27e0     1442 main/binary-amd64/Packages.gz
+ 56abcdc82a83d1674248cb2ddaaf5a215ceb4140e1efce8a8e075116a8191fdc     1062 main/binary-arm64/Packages.gz
