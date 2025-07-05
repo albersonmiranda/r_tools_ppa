@@ -104,7 +104,7 @@ generate_checksums() {
     local hash_name=$2
     
     echo "${hash_name}:" >> deb_${ARCH}/dists/stable/Release
-    find deb/dists/stable -name "Packages.gz" -type f | while read file; do
+    find deb_${ARCH}/dists/stable -name "Packages.gz" -type f | while read file; do
         local rel_path=${file#deb_${ARCH}/dists/stable/}
         local hash=$(${hash_cmd} "$file" | cut -d' ' -f1)
         local size=$(stat -c%s "$file")
