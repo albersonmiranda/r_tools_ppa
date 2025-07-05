@@ -1,0 +1,54 @@
+Package: Quarto
+Version: 1.7.32
+Architecture: amd64
+Maintainer: Posit, PBC <quarto@posit.co>
+Installed-Size: 425071
+Recommends: unzip
+Filename: pool/main/quarto-1.7.32-linux-amd64.deb
+Size: 130690970
+MD5sum: c77e5ff0472b80a841e9bdfb2384805e
+SHA1: 9e1168c0bfe56883a403c5feeb4283adf1fb6636
+SHA256: 9abee72a070a0735fe30c6824e1ca99dae3c118370217357c16ad4f5d6056071
+Section: user/text
+Priority: optional
+Homepage: https://github.com/quarto-dev/quarto-cli
+Description: Quarto is an academic, scientific, and technical publishing system built on Pandoc.
+
+Package: positron
+Version: 2025.07.0+204-1751301669
+Architecture: amd64
+Maintainer: Posit Software, PBC <info@posit.co>
+Installed-Size: 1281890
+Depends: ca-certificates, libasound2 (>= 1.0.17), libatk-bridge2.0-0 (>= 2.5.3), libatk1.0-0 (>= 2.11.90), libatspi2.0-0 (>= 2.9.90), libc6 (>= 2.14), libc6 (>= 2.17), libc6 (>= 2.2.5), libc6 (>= 2.25), libc6 (>= 2.28), libcairo2 (>= 1.6.0), libcups2 (>= 1.6.0), libcurl3-gnutls | libcurl3-nss | libcurl4 | libcurl3, libdbus-1-3 (>= 1.9.14), libexpat1 (>= 2.1~beta3), libgbm1 (>= 17.1.0~rc2), libglib2.0-0 (>= 2.37.3), libgtk-3-0 (>= 3.9.10), libgtk-3-0 (>= 3.9.10) | libgtk-4-1, libnspr4 (>= 2:4.9-2~), libnss3 (>= 2:3.30), libnss3 (>= 3.26), libpango-1.0-0 (>= 1.14.0), libstdc++6 (>= 4.1.1), libstdc++6 (>= 5), libstdc++6 (>= 5.2), libstdc++6 (>= 6), libudev1 (>= 183), libx11-6, libx11-6 (>= 2:1.4.99.1), libxcb1 (>= 1.9.2), libxcomposite1 (>= 1:0.4.4-1), libxdamage1 (>= 1:1.1), libxext6, libxfixes3, libxkbcommon0 (>= 0.5.0), libxkbfile1 (>= 1:1.1.0), libxrandr2, xdg-utils (>= 1.0.2)
+Recommends: libvulkan1
+Conflicts: positron-positron
+Replaces: positron-positron
+Provides: positron-positron
+Filename: pool/main/Positron-2025.07.0-204-x64.deb
+Size: 322885996
+MD5sum: 12da9a900c31e270d382b95d7185bb80
+SHA1: 5097beb9462311fa9a9cb226778684e24c9836a3
+SHA256: 7f6ecb0b8f925e793278fc3f7f0f2bf4962c390295a088859007adfd0b706cd8
+Section: devel
+Priority: optional
+Homepage: https://www.posit.co/
+Description: A next-generation data science IDE.
+ Positron is an extensible, polyglot tool for writing code and exploring data
+ in Python, R, and other languages.
+
+Package: rstudio
+Version: 2025.05.1+513
+Architecture: amd64
+Maintainer: RStudio <info@posit.co>
+Installed-Size: 876384
+Depends: libssl-dev, libclang-dev, libsqlite3-0, libxkbcommon-x11-0, libc6 (>= 2.7)
+Suggests: r-base (>= 3.6.0)
+Filename: pool/main/rstudio-2025.05.1-513-amd64.deb
+Size: 209775078
+MD5sum: e6c679be013f576d50dea157310cd0ad
+SHA1: 9a4d7bffede57bcf259d04087eb9a42198ba4579
+SHA256: 89a68b37fc700ff28fea16e3a8771cea58c72d573e3b09cba7f8d3ead74fc58d
+Section: devel
+Priority: optional
+Description: RStudio
+ RStudio is an integrated development environment (IDE) designed to support multiple languages, including both R and Python. It includes a console, syntax-highlighting editor that supports direct code execution, and a variety of robust tools for plotting, viewing history, debugging and managing your workspace.

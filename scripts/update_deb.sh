@@ -94,10 +94,14 @@ for ARCH in "amd64" "arm64"; do
         find "$DEB_DIR" -name "*-arm64.deb" -exec cp {} "$TEMP_DIR/" \;
     fi
     
-    # Generate Packages.gz for this architecture
-    dpkg-scanpackages --multiversion "$TEMP_DIR" /dev/null | \
-    sed "s|Filename: ${TEMP_DIR}/|Filename: pool/main/|g" | \
-    gzip -9c > "deb/dists/stable/main/binary-${ARCH}/Packages.gz"
+    # Generate Packages files for this architecture
+    PACKAGES_CONTENT=$(dpkg-scanpackages --multiversion "$TEMP_DIR" /dev/null | \
+    sed "s|Filename: ${TEMP_DIR}/|Filename: pool/main/|g")
+    
+    # Generate both .gz and .xz versions
+    echo "$PACKAGES_CONTENT" | gzip -9c > "deb/dists/stable/main/binary-${ARCH}/Packages.gz"
+    echo "$PACKAGES_CONTENT" | xz -9c > "deb/dists/stable/main/binary-${ARCH}/Packages.xz"
+    echo "$PACKAGES_CONTENT" > "deb/dists/stable/main/binary-${ARCH}/Packages"
     
     # Clean up temporary directory
     rm -rf "$TEMP_DIR"
@@ -124,7 +128,7 @@ generate_checksums() {
     local hash_name=$2
     
     echo "${hash_name}:" >> deb/dists/stable/Release
-    find deb/dists/stable -name "Packages.gz" -type f | while read file; do
+    find deb/dists/stable -name "Packages.gz" -o -name "Packages.xz" -o -name "Packages" | while read file; do
         local rel_path=${file#deb/dists/stable/}
         local hash=$(${hash_cmd} "$file" | cut -d' ' -f1)
         local size=$(stat -c%s "$file")

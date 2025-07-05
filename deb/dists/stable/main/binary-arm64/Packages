@@ -1,0 +1,37 @@
+Package: Quarto
+Version: 1.7.32
+Architecture: arm64
+Maintainer: Posit, PBC <quarto@posit.co>
+Installed-Size: 442129
+Recommends: unzip
+Filename: pool/main/quarto-1.7.32-linux-arm64.deb
+Size: 134852798
+MD5sum: c9de63108b7f3062ad83079f386a047f
+SHA1: 7b2f45ee960eb1b17c8dc57df0fe8c1a83b0096c
+SHA256: d3d4c2286cd378e88ab6109192e8136133bd3ea726b0a01210ce398b732089a0
+Section: user/text
+Priority: optional
+Homepage: https://github.com/quarto-dev/quarto-cli
+Description: Quarto is an academic, scientific, and technical publishing system built on Pandoc.
+
+Package: positron
+Version: 2025.07.0+204-1751301721
+Architecture: arm64
+Maintainer: Posit Software, PBC <info@posit.co>
+Installed-Size: 1311734
+Depends: ca-certificates, libasound2 (>= 1.0.17), libatk-bridge2.0-0 (>= 2.5.3), libatk1.0-0 (>= 2.11.90), libatspi2.0-0 (>= 2.9.90), libc6 (>= 2.17), libc6 (>= 2.25), libc6 (>= 2.28), libcairo2 (>= 1.6.0), libcups2 (>= 1.6.0), libcurl3-gnutls | libcurl3-nss | libcurl4 | libcurl3, libdbus-1-3 (>= 1.9.14), libexpat1 (>= 2.1~beta3), libgbm1 (>= 17.1.0~rc2), libglib2.0-0 (>= 2.37.3), libgtk-3-0 (>= 3.9.10), libgtk-3-0 (>= 3.9.10) | libgtk-4-1, libnspr4 (>= 2:4.9-2~), libnss3 (>= 2:3.30), libnss3 (>= 3.26), libpango-1.0-0 (>= 1.14.0), libstdc++6 (>= 4.1.1), libstdc++6 (>= 5), libstdc++6 (>= 5.2), libstdc++6 (>= 6), libudev1 (>= 183), libx11-6, libx11-6 (>= 2:1.4.99.1), libxcb1 (>= 1.9.2), libxcomposite1 (>= 1:0.4.4-1), libxdamage1 (>= 1:1.1), libxext6, libxfixes3, libxkbcommon0 (>= 0.5.0), libxkbfile1 (>= 1:1.1.0), libxrandr2, xdg-utils (>= 1.0.2)
+Recommends: libvulkan1
+Conflicts: positron-positron
+Replaces: positron-positron
+Provides: positron-positron
+Filename: pool/main/Positron-2025.07.0-204-arm64.deb
+Size: 317529276
+MD5sum: 01e41372c2a765c55928208b950dc2c2
+SHA1: 3189f0325ab6455736edcab54b04c1c95ed3f757
+SHA256: 4b18d03d9db052648860ec4107a012e947bb6a35f3324637da71dd91990d8410
+Section: devel
+Priority: optional
+Homepage: https://www.posit.co/
+Description: A next-generation data science IDE.
+ Positron is an extensible, polyglot tool for writing code and exploring data
+ in Python, R, and other languages.
