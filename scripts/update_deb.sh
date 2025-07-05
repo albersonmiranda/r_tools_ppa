@@ -79,19 +79,18 @@ done
 # --- Generate Debian Metadata ---
 echo "Generating APT metadata..."
 
-for ARCH in "binary-amd64" "binary-arm64"; do
-    mkdir -p "deb/dists/stable/main/${ARCH}"
-    dpkg-scanpackages --multiversion "$DEB_DIR" /dev/null | gzip -9c > "deb/dists/stable/main/${ARCH}/Packages.gz"
-done
+for ARCH in "amd64" "arm64"; do
+    mkdir -p "deb_${ARCH}/dists/stable/main/binary-${ARCH}"
+    dpkg-scanpackages --multiversion "$DEB_DIR" /dev/null | gzip -9c > "deb/dists/stable/main/binary-${ARCH}/Packages.gz"
 
 # --- Create Release file ---
-cat <<EOF > deb/dists/stable/Release
+cat <<EOF > deb_${ARCH}/dists/stable/Release
 Origin: r_tools_ppa
 Label: r_tools_ppa
 Suite: stable
 Codename: stable
 Date: $(date -R)
-Architectures: amd64 arm64
+Architectures: ${ARCH}
 Components: main
 Description: RStudio, Quarto, and Positron Linux packages
 EOF
@@ -104,17 +103,19 @@ generate_checksums() {
     local hash_cmd=$1
     local hash_name=$2
     
-    echo "${hash_name}:" >> deb/dists/stable/Release
+    echo "${hash_name}:" >> deb_${ARCH}/dists/stable/Release
     find deb/dists/stable -name "Packages.gz" -type f | while read file; do
-        local rel_path=${file#deb/dists/stable/}
+        local rel_path=${file#deb_${ARCH}/dists/stable/}
         local hash=$(${hash_cmd} "$file" | cut -d' ' -f1)
         local size=$(stat -c%s "$file")
-        printf " %s %8d %s\n" "$hash" "$size" "$rel_path" >> deb/dists/stable/Release
+        printf " %s %8d %s\n" "$hash" "$size" "$rel_path" >> deb_${ARCH}/dists/stable/Release
     done
 }
 
 # Generate MD5Sum and SHA256 checksums
 generate_checksums "md5sum" "MD5Sum"
 generate_checksums "sha256sum" "SHA256"
+
+done
 
 echo "✅ All packages downloaded and metadata generated successfully."
