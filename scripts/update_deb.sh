@@ -81,7 +81,7 @@ echo "Generating APT metadata..."
 
 for ARCH in "amd64" "arm64"; do
     mkdir -p "deb_${ARCH}/dists/stable/main/binary-${ARCH}"
-    dpkg-scanpackages --multiversion "$DEB_DIR" /dev/null | gzip -9c > "deb/dists/stable/main/binary-${ARCH}/Packages.gz"
+    dpkg-scanpackages --multiversion "$DEB_DIR" /dev/null | gzip -9c > "deb_${ARCH}/dists/stable/main/binary-${ARCH}/Packages.gz"
 
 # --- Create Release file ---
 cat <<EOF > deb_${ARCH}/dists/stable/Release
