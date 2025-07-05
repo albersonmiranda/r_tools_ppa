@@ -42,19 +42,15 @@ To enable this repository and install the latest RStudio, Quarto, or Positron:
 
 ## Debian/Ubuntu Installation
 
+For both amd64 and arm64 architectures:
+
 1. Add the repository:
    ```sh
-   echo "deb [trusted=yes] https://downloads.sourceforge.net/project/r-tools-ppa/deb_amd64 stable main" | sudo tee /etc/apt/sources.list.d/r_tools_ppa.list
-   sudo apt update
+   echo "deb [trusted=yes] https://downloads.sourceforge.net/project/r-tools-ppa/deb stable main" | sudo tee /etc/apt/sources.list.d/r_tools_ppa.list
+sudo apt update
    ```
 
-   Or for arm64:
+2. Install a package (e.g., Positron):
    ```sh
-   echo "deb [trusted=yes] https://downloads.sourceforge.net/project/r-tools-ppa/deb_arm64 stable main" | sudo tee /etc/apt/sources.list.d/r_tools_ppa.list
-   sudo apt update
-   ```
-
-2. Install a package (e.g., RStudio):
-   ```sh
-   sudo apt install rstudio
+   sudo apt install positron
    ```
