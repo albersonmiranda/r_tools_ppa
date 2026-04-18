@@ -1,0 +1,15 @@
+{
+  "name": "Ubuntu",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "analytic-signal.preview-pdf",
+        "aaron-bond.better-comments",
+        "Gruntfuggly.todo-tree"
+      ]
+    }
+  }
+}
