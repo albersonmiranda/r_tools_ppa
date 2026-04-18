@@ -26,7 +26,7 @@ download_tmp() {
     local label=$2
     local tmp_file
 
-    echo "Downloading $label from $url..."
+    echo "Downloading $label from $url..." >&2
     tmp_file=$(mktemp)
     curl -fL -o "$tmp_file" "$url"
     [ -s "$tmp_file" ] || die "Downloaded $label file is empty"
