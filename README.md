@@ -27,12 +27,17 @@ versions of Rstudio, Quarto and Positron for Linux users.
 To enable this repository and install the latest RStudio, Quarto, or
 Positron:
 
-1.  Add the repository:
+1.  Download and install the signing key:
 
-        echo "deb [trusted=yes] https://downloads.sourceforge.net/project/r-tools-ppa/deb stable main" | sudo tee /etc/apt/sources.list.d/r_tools_ppa.list
+        sudo curl -fsSL https://downloads.sourceforge.net/project/r-tools-ppa/r_tools_ppa.gpg.key \
+          | sudo gpg --dearmor -o /etc/apt/keyrings/r_tools_ppa.gpg
+
+2.  Add the repository:
+
+        echo "deb [arch=amd64,arm64 signed-by=/etc/apt/keyrings/r_tools_ppa.gpg] https://downloads.sourceforge.net/project/r-tools-ppa/deb stable main" | sudo tee /etc/apt/sources.list.d/r_tools_ppa.list
         sudo apt update
 
-2.  Install a package (e.g., RStudio):
+3.  Install a package (e.g., RStudio):
 
         sudo apt install rstudio
 
