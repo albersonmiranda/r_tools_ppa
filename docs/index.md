@@ -44,13 +44,19 @@ To enable this repository and install the latest RStudio, Quarto, or Positron:
 
 For both amd64 and arm64 architectures:
 
-1. Add the repository:
+1. Download and install the signing key:
    ```sh
-   echo "deb [trusted=yes] https://downloads.sourceforge.net/project/r-tools-ppa/deb stable main" | sudo tee /etc/apt/sources.list.d/r_tools_ppa.list
-sudo apt update
+   sudo curl -fsSL https://downloads.sourceforge.net/project/r-tools-ppa/r_tools_ppa.gpg.key \
+     | sudo gpg --dearmor -o /etc/apt/keyrings/r_tools_ppa.gpg
    ```
 
-2. Install a package (e.g., Positron):
+2. Add the repository:
+   ```sh
+   echo "deb [arch=amd64,arm64 signed-by=/etc/apt/keyrings/r_tools_ppa.gpg] https://downloads.sourceforge.net/project/r-tools-ppa/deb stable main" | sudo tee /etc/apt/sources.list.d/r_tools_ppa.list
+   sudo apt update
+   ```
+
+3. Install a package (e.g., Positron):
    ```sh
    sudo apt install positron
    ```

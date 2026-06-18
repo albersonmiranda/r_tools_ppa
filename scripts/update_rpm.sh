@@ -137,6 +137,10 @@ for ARCH in x86_64 arm64; do
     download_to "$URL" "$DEST" "Positron .rpm $ARCH"
 done
 
+echo "Signing RPM packages..."
+
+rpm --addsign "$RPM_X86_DIR"/*.rpm "$RPM_ARM_DIR"/*.rpm || echo "Warning: RPM signing failed. Ensure ~/.rpmmacros is configured with %_gpg_name."
+
 echo "Generating RPM metadata..."
 
 createrepo_c "$RPM_X86_DIR"
