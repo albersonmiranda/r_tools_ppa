@@ -119,4 +119,28 @@ generate_checksums() {
 generate_checksums "md5sum" "MD5Sum"
 generate_checksums "sha256sum" "SHA256"
 
+echo "Signing APT metadata..."
+gpg --default-key "albersonmiranda@hotmail.com" \
+    --clearsign \
+    --output deb/dists/stable/InRelease \
+    deb/dists/stable/Release
+
+gpg --default-key "albersonmiranda@hotmail.com" \
+    --detach-sign --armor \
+    --output deb/dists/stable/Release.gpg \
+    deb/dists/stable/Release
+
 echo "All packages downloaded and metadata generated successfully."
+
+echo "Signing Release file with GPG key..."
+
+# Sign the Release file
+gpg --default-key "albersonmiranda@hotmail.com" \
+    --clearsign \
+    --output deb/dists/stable/InRelease \
+    deb/dists/stable/Release
+
+gpg --default-key "albersonmiranda@hotmail.com" \
+    --detach-sign --armor \
+    --output deb/dists/stable/Release.gpg \
+    deb/dists/stable/Release
