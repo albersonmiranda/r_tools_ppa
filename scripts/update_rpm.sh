@@ -162,14 +162,14 @@ for ARCH in x86_64 arm64; do
     download_to "$URL" "$DEST" "Positron .rpm $ARCH"
 done
 
-echo "Signing RPM packages..."
+echo "Re-signing RPM packages with repository key..."
 
 configure_rpm_signing
 gpg --list-secret-keys "$GPG_KEY_ID" >/dev/null 2>&1 \
     || die "GPG secret key '$GPG_KEY_ID' not found. Import it or set GPG_PRIVATE_KEY in CI."
 
 unset GPG_TTY
-rpm --addsign "$RPM_X86_DIR"/*.rpm "$RPM_ARM_DIR"/*.rpm
+rpm --resign "$RPM_X86_DIR"/*.rpm "$RPM_ARM_DIR"/*.rpm
 
 echo "Generating RPM metadata..."
 
