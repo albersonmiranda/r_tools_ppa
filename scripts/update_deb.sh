@@ -120,27 +120,20 @@ generate_checksums "md5sum" "MD5Sum"
 generate_checksums "sha256sum" "SHA256"
 
 echo "Signing APT metadata..."
-gpg --default-key "albersonmiranda@hotmail.com" \
+
+GPG_SIGN_ARGS=(--default-key "albersonmiranda@hotmail.com")
+if [ -n "${GPG_PASSPHRASE:-}" ]; then
+    GPG_SIGN_ARGS+=(--batch --yes --pinentry-mode loopback --passphrase "$GPG_PASSPHRASE")
+fi
+
+gpg "${GPG_SIGN_ARGS[@]}" \
     --clearsign \
     --output deb/dists/stable/InRelease \
     deb/dists/stable/Release
 
-gpg --default-key "albersonmiranda@hotmail.com" \
+gpg "${GPG_SIGN_ARGS[@]}" \
     --detach-sign --armor \
     --output deb/dists/stable/Release.gpg \
     deb/dists/stable/Release
 
 echo "All packages downloaded and metadata generated successfully."
-
-echo "Signing Release file with GPG key..."
-
-# Sign the Release file
-gpg --default-key "albersonmiranda@hotmail.com" \
-    --clearsign \
-    --output deb/dists/stable/InRelease \
-    deb/dists/stable/Release
-
-gpg --default-key "albersonmiranda@hotmail.com" \
-    --detach-sign --armor \
-    --output deb/dists/stable/Release.gpg \
-    deb/dists/stable/Release
