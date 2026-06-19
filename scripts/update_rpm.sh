@@ -33,9 +33,32 @@ download_tmp() {
     printf '%s\n' "$tmp_file"
 }
 
-for cmd in jq createrepo_c curl grep head rpmbuild; do
+for cmd in jq createrepo_c curl grep head rpmbuild gpg rpm; do
     command -v $cmd >/dev/null 2>&1 || { echo >&2 "$cmd is required but not installed. Aborting."; exit 1; }
 done
+
+GPG_KEY_ID="albersonmiranda@hotmail.com"
+
+configure_rpm_signing() {
+    install -d -m 700 ~/.gnupg
+
+    if [ -n "${GPG_PASSPHRASE:-}" ]; then
+        grep -q '^pinentry-mode loopback$' ~/.gnupg/gpg.conf 2>/dev/null \
+            || echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
+    fi
+
+    cat > ~/.rpmmacros <<EOF
+%_signature gpg
+%_gpg_path ${HOME}/.gnupg
+%_gpg_name ${GPG_KEY_ID}
+EOF
+
+    if [ -n "${GPG_PASSPHRASE:-}" ]; then
+        cat >> ~/.rpmmacros <<EOF
+%_gpg_pass_phrase ${GPG_PASSPHRASE}
+EOF
+    fi
+}
 
 RPM_X86_DIR="rpm/x86_64"
 RPM_ARM_DIR="rpm/aarch64"
@@ -139,7 +162,11 @@ done
 
 echo "Signing RPM packages..."
 
-rpm --addsign "$RPM_X86_DIR"/*.rpm "$RPM_ARM_DIR"/*.rpm || echo "Warning: RPM signing failed. Ensure ~/.rpmmacros is configured with %_gpg_name."
+configure_rpm_signing
+gpg --list-secret-keys "$GPG_KEY_ID" >/dev/null 2>&1 \
+    || die "GPG secret key '$GPG_KEY_ID' not found. Import it or set GPG_PRIVATE_KEY in CI."
+
+rpm --addsign "$RPM_X86_DIR"/*.rpm "$RPM_ARM_DIR"/*.rpm
 
 echo "Generating RPM metadata..."
 

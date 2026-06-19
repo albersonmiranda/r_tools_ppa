@@ -17,9 +17,19 @@ jobs:
       - name: Install dependencies
         run: |
           dnf update -y
-          dnf install -y createrepo_c jq curl rpm-build rpmdevtools lftp tar gzip sshpass openssh-clients
+          dnf install -y createrepo_c jq curl rpm-build rpmdevtools rpm-sign gnupg2 lftp tar gzip sshpass openssh-clients
+
+      - name: Import GPG signing key
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+        run: |
+          install -d -m 700 ~/.gnupg
+          echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
+          echo "$GPG_PRIVATE_KEY" | gpg --batch --import
 
       - name: Run update script
+        env:
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         run: |
           bash scripts/update_rpm.sh
 
