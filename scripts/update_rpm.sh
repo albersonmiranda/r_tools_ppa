@@ -45,6 +45,8 @@ configure_rpm_signing() {
     if [ -n "${GPG_PASSPHRASE:-}" ]; then
         grep -q '^pinentry-mode loopback$' ~/.gnupg/gpg.conf 2>/dev/null \
             || echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
+        grep -q '^allow-loopback-pinentry$' ~/.gnupg/gpg-agent.conf 2>/dev/null \
+            || echo "allow-loopback-pinentry" >> ~/.gnupg/gpg-agent.conf
     fi
 
     cat > ~/.rpmmacros <<EOF
@@ -55,7 +57,7 @@ EOF
 
     if [ -n "${GPG_PASSPHRASE:-}" ]; then
         cat >> ~/.rpmmacros <<EOF
-%_gpg_pass_phrase ${GPG_PASSPHRASE}
+%_gpg_sign_cmd_extra_args --batch --no-tty --pinentry-mode loopback --passphrase ${GPG_PASSPHRASE}
 EOF
     fi
 }
@@ -166,6 +168,7 @@ configure_rpm_signing
 gpg --list-secret-keys "$GPG_KEY_ID" >/dev/null 2>&1 \
     || die "GPG secret key '$GPG_KEY_ID' not found. Import it or set GPG_PRIVATE_KEY in CI."
 
+unset GPG_TTY
 rpm --addsign "$RPM_X86_DIR"/*.rpm "$RPM_ARM_DIR"/*.rpm
 
 echo "Generating RPM metadata..."
