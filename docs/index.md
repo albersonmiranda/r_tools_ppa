@@ -7,8 +7,9 @@ date: 2025-06-03
 
 # R Tools PPA
 
-> [!IMPORTANT]
-> All packages in this repository are now GPG signed. If you were a user before 2026-06-19, you have to reinstall the repository or [update the keys](#updating-the-signing-key).
+<div style="padding: 15px; border-left: 5px solid #007bff; background-color: #f0f7ff;">
+    <strong>Important:</strong> All packages in this repository are now GPG signed. If you were a user before 2026-06-19, you have to reinstall the repository or update the keys (See section Updating the signing key below).
+</div>
 
 This is a Personal Package Archive (PPA) for distributing latest versions of Rstudio, Quarto and Positron for Linux users.
 
@@ -49,11 +50,6 @@ To enable this repository and install the latest RStudio, Quarto, or Positron:
     ```
 
     The repo file enables GPG signature verification and references the signing key above. `dnf` imports the key on first use.
-
-    To import the key manually first (optional):
-    ```sh
-    sudo rpm --import https://downloads.sourceforge.net/project/r-tools-ppa/r_tools_ppa.gpg.key
-    ```
 
 2. Update & install (e.g., RStudio):
     ```sh
